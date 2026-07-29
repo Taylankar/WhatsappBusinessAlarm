@@ -1,0 +1,15 @@
+TELEFONDAN APK OLUSTURMA
+
+1. Telefonda github.com adresine girip ücretsiz hesap açın.
+2. Yeni ve PUBLIC bir depo oluşturun.
+3. Bu ZIP içindeki WhatsAppBusinessAlarm klasörünün İÇİNDEKİ bütün dosyaları depoya yükleyin.
+   .github klasörünün de yüklendiğinden emin olun.
+4. Depodaki Actions sekmesine girin.
+5. "APK Olustur" iş akışını açıp "Run workflow" düğmesine basın.
+6. İşlem yeşil olunca çalışmayı açın.
+7. Sayfanın altındaki Artifacts bölümünden "WhatsAppBusinessAlarm-APK" dosyasını indirin.
+8. ZIP'i telefonda açın ve app-debug.apk dosyasına dokunup kurun.
+9. Samsung, bilinmeyen uygulama kurma izni isterse kullandığınız tarayıcıya/dosya yöneticisine bir defalık izin verin.
+10. Uygulamayı açıp bildirim erişimini etkinleştirin.
+
+Not: GitHub Actions'a yüklenen kaynak kodu public depoda herkesçe görülebilir. Kodda şifre veya kişisel bilgi yoktur.
