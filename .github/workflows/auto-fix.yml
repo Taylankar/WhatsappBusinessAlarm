@@ -3,46 +3,33 @@ name: Auto Fix and Build APK
 on:
   push:
     branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
   fix-and-build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout project
-      uses: actions/checkout@v4
+      - name: Checkout project
+        uses: actions/checkout@v4
 
-    - name: Setup Java JDK
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-        distribution: 'temurin'
+      - name: Setup Java JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
 
-    - name: Inject Missing Gradle Wrapper
-      run: |
-        gradle wrapper --gradle-version 8.2 --distribution-type bin
-        chmod +x gradlew
+      - name: Inject Missing Gradle Wrapper
+        run: |
+          gradle wrapper --gradle-version 8.2 --distribution-type bin
 
-    - name: Fix Project Layout
-      run: |
-        mkdir -p app/src/main/java/com/example/whatsappalarm
-        mkdir -p app/src/main/res/layout
-        mkdir -p app/src/main/res/values
-        
-        [ -f MainActivity.kt ] && mv MainActivity.kt app/src/main/java/com/example/whatsappalarm/ || true
-        [ -f AlarmController.kt ] && mv AlarmController.kt app/src/main/java/com/example/whatsappalarm/ || true
-        [ -f TriggerSettings.kt ] && mv TriggerSettings.kt app/src/main/java/com/example/whatsappalarm/ || true
-        [ -f WhatsAppNotificationListener.kt ] && mv WhatsAppNotificationListener.kt app/src/main/java/com/example/whatsappalarm/ || true
-        
-        [ -f AndroidManifest.xml ] && mv AndroidManifest.xml app/src/main/ || true
-        [ -f activity_main.xml ] && mv activity_main.xml app/src/main/res/layout/ || true
-        [ -f styles.xml ] && mv styles.xml app/src/main/res/values/ || true
+      - name: Build APK with Gradle
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug
 
-    - name: Build APK with Gradle
-      run: ./gradlew assembleDebug
-
-    - name: Upload WhatsApp Alarm APK
-      uses: actions/upload-artifact@v4
-      with:
-        name: whatsapp-alarm-app
-        "**/build/outputs/apk/**/*.apk"
+      - name: Upload WhatsApp Alarm APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: WhatsappBusinessAlarm-APK
+          path: build/outputs/apk/debug/*.apk
